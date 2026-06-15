@@ -5,5 +5,4 @@ class Carrera:
             self.carrera = carrera
         
         def mostrar_info(self):
-            return f"{self.id }" - {self.carrera}"
-        
+         return f"{self.id} - {self.carrera}"
