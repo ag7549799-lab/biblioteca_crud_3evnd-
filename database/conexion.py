@@ -10,10 +10,11 @@ class Conexion:
      @staticmethod
      def obtener_conexion():
         return psycopg2.connect(
-            host=os.getenv("DB_HOST"),
-            database=os.getenv("DB_NAME"),
-            user=os.getenv("DB_USER"),
-            password=os.getenv("DB_PASSWORD"),
-            port=os.getenv("DB_PORT")
+            host=os.getenv("localhost"),
+            database=os.getenv("biblioteca_3aevnd"),
+            user=os.getenv("postgres"),
+            password=os.getenv("chilaquiles"),
+            port=os.getenv("5433")
+            
         )
     

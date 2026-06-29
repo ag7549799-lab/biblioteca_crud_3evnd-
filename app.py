@@ -1,9 +1,9 @@
 from dao.libro_dao import LibroDAO
-from models.ibro import Libro 
+from models.libro import Libro 
 
 def ver_todo(libro_dao):
     try:
-        libros = libro_dao.obtener_libros()
+        libros = libro_dao.obtener_todo()
         
         print("\nLibros en la biblioteca")
         if len(libros) == 0:
@@ -60,13 +60,12 @@ def main():
     opcion = int(input("Selecciona una opción (1-4): "))
     
     match opcion:
-        case 1:ver_todo(libro_dao)
-        case 2:insertar_libro(libro_dao)
-        case 3:actualizar_libro(libro_dao)
-        case 4: eliminar_libro(libro_dao)
+        case 1: ver_todo(libro_dao)
+        case 2: insertar_libro(libro_dao)
+        case 3:  actualizar_libro(libro_dao)
+        case 4:  eliminar_libro(libro_dao)
 
 if __name__ == "__main__":
     main()
     
-
-    
+ 
