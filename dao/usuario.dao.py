@@ -1,9 +1,8 @@
 # DAO: Data Access Object
 # libro_dao: Objeto de acceso a datos de la tabla libro
 
-
 from database.conexion import Conexion
-from models.libro import Libro
+from models.usuario import  Usuario 
 
 class LibroDAO:
 

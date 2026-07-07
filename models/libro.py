@@ -1,21 +1,22 @@
 # Clase Libro
-
 class Libro:
 
     # Método constructor
-    def __init__(self, titulo, autor, isbn,disponible):
+    def __init__(self, id, titulo, autor, isbn, disponible):
         self.id = id
         self.titulo = titulo
         self.autor = autor
-        self.isb  = isbn 
-        self.disponible =disponible
+        self.isbn = isbn
+        self.disponible = disponible
 
-    def mostrar_info(self):
+    # Mostrar en la pantalla la información de un libro
+    def mostrar_info(self) :
         estado = "Disponible" if self.disponible else "Prestado"
         return f"{self.titulo} - {self.autor} : {estado}"
 
+
     def prestar(self):
-        if self.disponible:
+        if self.disponible :
             self.disponible = False
             print(f"El libro {self.titulo} está prestado")
             return True
@@ -23,8 +24,7 @@ class Libro:
             print(f"El libro {self.titulo} no está disponible")
             return False
 
-    def devolver(self):
+    def devolver(self) :
         self.disponible = True
         print(f"El libro {self.titulo} ha sido devuelto")
-        
         
