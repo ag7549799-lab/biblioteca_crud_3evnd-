@@ -1,3 +1,6 @@
+import flet as ft 
+
+from ui.main_window import main_window 
 from dao.libro_dao import LibroDAO
 from dao. usuario_dao import UsuarioDAO
 from models.libro import Libro
@@ -104,13 +107,15 @@ def main():
 
 
 
-            def main():
+    def main():
+
+        ft.app(target = main_window)
         print("=== Biblioteca universiataria ===")
-print(" == Menu de opciones ==")
-print("1.Gestion de libros")
-print("2.Gestion de usuarios")
-        except ValueError:
-print("Por favor, introduce un número válido.")
+        print(" == Menu de opciones ==")
+        print("1.Gestion de libros")
+        print("2.Gestion de usuarios")
+        
+    #opcion =int(input("Escribe tu opcion"))
 
     # --- SEGUNDA PARTE: Menú de control interactivo continuo (1-5) ---
     while True:
