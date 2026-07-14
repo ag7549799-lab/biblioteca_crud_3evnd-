@@ -7,8 +7,19 @@
             "port": 5527,
             "driver": "PostgreSQL",
             "name": "PostgreSQL 17",
-            "database": "postgres",
+            "database": "Biblioteca_3aEvnd ",
             "username": "postgres"
+        },
+        {
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "Biblioteca_3aEvnd",
+            "database": "biblioteca-crud",
+            "username": "postgres",
+            "password": ""
         },
         {
             "ssh": "Disabled",
@@ -16,9 +27,9 @@
             "server": "localhost",
             "port": 5527,
             "driver": "PostgreSQL",
-            "name": "PostgreSQL 17",
-            "database": "Biblioteca_3aEvnd ",
-            "username": "postgres"
+            "name": "biblioteca_crud",
+            "username": "postgres",
+            "database": "biblioteca_crud "
         }
     ]
 }

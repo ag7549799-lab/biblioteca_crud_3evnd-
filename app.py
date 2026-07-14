@@ -1,150 +1,187 @@
-import flet as ft 
+import flet as ft
 
-from ui.main_window import main_window 
+from ui.main_window import main_window
 from dao.libro_dao import LibroDAO
-from dao. usuario_dao import UsuarioDAO
+from dao.usuario_dao import UsuarioDAO
 from models.libro import Libro
-from models usuario import Usuario 
+from models.usuario import Usuario
 
-def ver_todo(libro_dao):
+# =====================================================================
+#                          MÓDULO DE LIBROS
+# =====================================================================
+
+def ver_todo_libros(libro_dao):
     try:
         libros = libro_dao.obtener_libros()
         print("\n=== Libros en la biblioteca ===")
         if len(libros) == 0:
             print("No hay libros registrados")
-        else :
+        else:
             for libro in libros:
                 print(f"ID: {libro.id} - {libro.titulo} - {libro.autor} - {libro.disponible}") 
-        
         print("\n Conexión exitosa a la base de datos")
     except Exception as e:
         print(f"Error al conectar a la base de datos: {e}")
 
 def insertar_libro(libro_dao):
     try:
-        print("---------------------------------------")
+        print("\n---------------------------------------")
         print("Inserción de un nuevo libro")
         titulo = input("Escribe título del libro: ")
         autor = int(input("Escribe el id del autor: "))
         isbn = input("Escribe el ISBN del libro: ")
         disponible = True
         
-        # Colocamos None en el ID ya que pgAdmin incrementa el id_libro automáticamente
         nuevoLibro = Libro(None, titulo, autor, isbn, disponible)
         libro_dao.insertar(nuevoLibro)
+        print("¡Libro insertado con éxito!")
     except Exception as e:
         print(f"Error al insertar libro : {e}")
 
 def actualizar_libro(libro_dao):
     try:
-        ver_todo(libro_dao)
-        id = int(input("Escribe el id del libro a editar: "))
+        ver_todo_libros(libro_dao)
+        id = int(input("\nEscribe el id del libro a editar: "))
         print("Actualiza los datos de este libro")
-        titulo = input("Escribe el nuevo títuo del libro: ")
+        titulo = input("Escribe el nuevo título del libro: ")
         autor = int(input("Escribe el nuevo id del autor: "))
         isbn = input("Escribe el nuevo isbn del libro: ")
         
-        # Validación limpia de disponibilidad
         resp = input("¿Está disponible? (s/n): ").strip().lower()
         disponible = True if resp == 's' else False
         
         libro = Libro(id, titulo, autor, isbn, disponible)
         libro_dao.actualizar(libro)
+        print("¡Libro updated con éxito!")
     except Exception as e:
         print(f"Error al actualizar libro: {e}")
 
-
-        def menu_libros()
-        usuario_dao = UsuarioDAO()
+def eliminar_libro(libro_dao):
     try:
-        ver_todo(libro_dao)
-        id = int(input("Escribe el id del libro a eliminar: "))
+        ver_todo_libros(libro_dao)
+        id = int(input("\nEscribe el id del libro a eliminar: "))
         libro_dao.eliminar(id)
-        print("Libros disponibles")
-        ver_todo(libro_dao)   
-            
-            
+        print("\nLibros disponibles actualizados:")
+        ver_todo_libros(libro_dao)
     except Exception as e:
         print(f"Error al eliminar libro: {e}")
 
-
-def main():
-    
-    # --- PRIMERA PARTE: Búsqueda inicial por ID del 1 al 4 ---
-    print("=== Biblioteca universitaria === ")
-    print("1. Ver todos los libros")
-    print("2. Insertar nuevo libro")
-    print("3. Actualizar un libro existente")
-    print("4. Eliminar un libro exstente")
-    opcion = int(input("Escribe una opcion(1-4): "))
-    
-    if 1 <= id_buscado <= 4:
-            print(f"\nBuscando en pgAdmin el libro con ID: {id_buscado}...")
-            libros_bd = libro_dao.obtener_libros()
-            libro_encontrado = next((l for l in libros_bd if l.id == id_buscado), None)
-            
-            if libro_encontrado:
-                print("\n[Libro Encontrado]:")
-                print(f"ID Libro: {libro_encontrado.id}")
-                print(f"Título:   {libro_encontrado.titulo}")
-                print(f"Autor ID: {libro_encontrado.autor}")
-                print(f"ISBN:     {libro_encontrado.isbn}")
-                print(f"Estado:   {'Disponible' if libro_encontrado.disponible else 'No disponible'}")
-            else:
-                print(f"No existe ningún libro con el ID {id_buscado} en las tablas.")
-        else:
-            print("El ID ingresado no está dentro del rango inicial (1-4).")
-        match opcion:
-        case 1: ver_usuarios(usuario_dao)
-        case 2:Insertar_usuario(usuario_dao)
-        case 3:eliminar_libro(libro_dao)
-def main():
-            print("=== Biblioteca universitaria ===")
-            print(" == Menu de opciones ==")
-            print("1.Gestion de libros")
-            print("2. Gestion de usurios")
-
-
-
-
-    def main():
-
-        ft.app(target = main_window)
-        print("=== Biblioteca universiataria ===")
-        print(" == Menu de opciones ==")
-        print("1.Gestion de libros")
-        print("2.Gestion de usuarios")
-        
-    #opcion =int(input("Escribe tu opcion"))
-
-    # --- SEGUNDA PARTE: Menú de control interactivo continuo (1-5) ---
+def menu_libros():
+    libro_dao = LibroDAO()
     while True:
         print("\n==================================")
-        print("=== ¿Qué deseas hacer ahora? ===")
+        print("=== Administración de Libros ===")
         print("==================================")
         print("1. Ver todos los libros")
         print("2. Insertar nuevo libro")
         print("3. Actualizar un libro existente")
         print("4. Eliminar un libro existente")
-        print("5. Salir del programa")
+        print("5. Volver al menú principal")
         
         try:
             opcion = int(input("Escribe una opcion (1-5): "))
-            
             match opcion:
-                case 1: ver_todo(libro_dao)
+                case 1: ver_todo_libros(libro_dao)
                 case 2: insertar_libro(libro_dao)
                 case 3: actualizar_libro(libro_dao)
                 case 4: eliminar_libro(libro_dao)
-                case 5: 
-                    print("Cerrando el sistema de biblioteca...")
-                    break
-                case _: 
-                    print("Opción inválida. Elige un número del 1 al 5.")
+                case 5: break
+                case _: print("Opción inválida.")
         except ValueError:
-            print("Entrada incorrecta. Por favor escribe un número entero.")
+            print("Por favor escribe un número entero.")
+
+
+# =====================================================================
+#                          MÓDULO DE USUARIOS
+# =====================================================================
+
+def ver_todo_usuarios(usuario_dao):
+    try:
+        usuarios = usuario_dao.unlock_usuarios() if hasattr(usuario_dao, 'unlock_usuarios') else usuario_dao.obtener_usuarios()
+        print("\n=== Usuarios en la biblioteca ===")
+        if len(usuarios) == 0:
+            print("No hay usuarios registrados")
+        else:
+            for u in usuarios:
+                estado = "Activo" if u.activo else "Inactivo"
+                print(f"ID: {u.id} | Nombre: {u.nombre} | Matrícula: {u.matricula} | ID Carrera: {u.carrera} | Correo: {u.correo} | Estado: {estado}")
+    except Exception as e:
+        print(f"Error al conectar con usuarios: {e}")
+
+def insertar_usuario(usuario_dao):
+    try:
+        print("\n---------------------------------------")
+        print("Inserción de un nuevo usuario")
+        
+        nombre = input("Escribe el nombre del usuario: ")
+        matricula = input("Escribe la matrícula del usuario: ")
+        carrera = int(input("Escribe el ID numérico de la carrera: "))
+        correo = input("Escribe el correo del usuario: ")
+        activo = True  
+        
+        nuevo_usuario = Usuario(None, nombre, matricula, carrera, correo, activo)
+        usuario_dao.insertar(nuevo_usuario)
+        print("¡Usuario registrado con éxito!")
+    except Exception as e:
+        print(f"Error al insertar usuario: {e}")
+
+def actualizar_usuario(usuario_dao):
+    try:
+        ver_todo_usuarios(usuario_dao)
+        id = int(input("\nEscribe el ID del usuario a editar: "))
+        nombre = input("Escribe el nuevo nombre: ")
+        matricula = input("Escribe la nueva matrícula: ")
+        carrera = int(input("Escribe el nuevo ID numérico de la carrera: "))
+        correo = input("Escribe el nuevo correo: ")
+        
+        resp = input("¿Está activo? (s/n): ").strip().lower()
+        activo = True if resp == 's' else False
+        
+        usuario = Usuario(id, nombre, matricula, carrera, correo, activo)
+        usuario_dao.actualizar(usuario)
+        print("¡Usuario actualizado con éxito!")
+    except Exception as e:
+        print(f"Error al actualizar usuario: {e}")
+
+def eliminar_usuario(usuario_dao):
+    try:
+        ver_todo_usuarios(usuario_dao)
+        id = int(input("\nEscribe el ID del usuario a eliminar: "))
+        usuario_dao.eliminar(id)
+        print("\nUsuarios actualizados:")
+        ver_todo_usuarios(usuario_dao)
+    except Exception as e:
+        print(f"Error al eliminar usuario: {e}")
+
+def menu_usuarios():
+    usuario_dao = UsuarioDAO()
+    while True:
+        print("\n==================================")
+        print("=== Administración de Usuarios ===")
+        print("==================================")
+        print("1. Ver todos los usuarios")
+        print("2. Insertar nuevo usuario")
+        print("3. Actualizar un usuario existente")
+        print("4. Eliminar un usuario existente")
+        print("5. Volver al menú principal")
+        
+        try:
+            opcion = int(input("Escribe una opcion (1-5): "))
+            match opcion:
+                case 1: ver_todo_usuarios(usuario_dao)
+                case 2: insertar_usuario(usuario_dao)
+                case 3: actualizar_usuario(usuario_dao)
+                case 4: eliminar_usuario(usuario_dao)
+                case 5: break
+                case _: print("Opción inválida.")
+        except ValueError:
+            print("Por favor escribe un número entero.")
+
+
+# =====================================================================
+#                          FLUJO PRINCIPAL
+# =====================================================================
 
 if __name__ == "__main__":
-    main()
+    ft.run(main_window)
     
-

@@ -4,29 +4,30 @@
 from database.conexion import Conexion
 from models.usuario import  Usuario 
 
-class LibroDAO:
+class UsuarioDAO:
 
-    # SELECT * from libro
+    # SELECT * from usuario
     def obtener_todos(self):
         conexion = Conexion.obtener_conexion()
         cursor = conexion.cursor()        
 
-        cursor.execute("SELECT * FROM vista_libros")
+        cursor.execute("SELECT * FROM vista_usuarios")
         registros = cursor.fetchall()
 
-        libros = []
+        usuarios = []
         for registro in registros:
-            libro = Libro(
+            usuario = Usuario(
                 id=registro[0],
-                titulo=registro[1],
-                autor=registro[2],
-                isbn=registro[3],
-                disponible=registro[4]
+                matricula=registro[1],
+                nombre=registro[2],
+                carrera=registro[3],
+                correo=registro[4],
+                activo=registro[5]
             )
-            libros.append(libro)
+            usuarios.append(usuario)
         cursor.close()
         conexion.close()
-        return libros
+        return usuarios
 
     def insertar(self, libro):
         conexion = Conexion.obtener_conexion()
